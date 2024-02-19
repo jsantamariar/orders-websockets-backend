@@ -4,7 +4,7 @@ class Sockets {
   constructor(io) {
     this.io = io;
 
-    // create the ticketList instance
+    // Create a new instance of TicketList
     this.ticketList = new TicketList();
 
     this.socketEvents();
@@ -12,11 +12,8 @@ class Sockets {
 
   socketEvents() {
     // On connection
-    this.io.on("connection", socket => {
-      console.log("client connected");
-
-      // Escuchar evento: mensaje-to-server
-      socket.on("request-new-ticket", (data, callback) => {
+    this.io.on("connection", (socket) => {
+      socket.on("request-ticket", (data, callback) => {
         const newTicket = this.ticketList.createTicket();
         callback(newTicket);
       });

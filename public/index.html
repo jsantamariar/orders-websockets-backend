@@ -13,7 +13,7 @@
     />
   </head>
   <body class="container">
-    <h1 class="mt-5">Access denied</h1>
+    <h1 class="mt-5">Sockets backend</h1>
     <hr />
 
     <script
@@ -24,12 +24,12 @@
 
     <script>
       // Conexión con el socket server
-      const socket = io(process.env.URL);
+      const socket = io("http://localhost:8080");
 
-      /// Para emitir
+      /// to emit
       // socket.emit('mensaje-to-server', { data });
 
-      // Para escuchar
+      // to listen
       socket.on("mensaje-from-server", (data) => {
         // callback a ejecutar
       });

@@ -10,52 +10,43 @@ const Sockets = require("./sockets");
 class Server {
   constructor() {
     this.app = express();
-    this.port = process.env.URL;
+    this.port = process.env.PORT;
 
     // Http server
     this.server = http.createServer(this.app);
 
-    // Configuraciones de sockets
+    // Socket config
     this.io = socketio(this.server, {
-      /* configuraciones */
+      /* config */
     });
 
+    // Sockets Initialization
     this.sockets = new Sockets(this.io);
   }
 
   middlewares() {
-    // Desplegar el directorio público
+    // Deploy in public folder
     this.app.use(express.static(path.resolve(__dirname, "../public")));
 
-    // CORS
+    // cors config
     this.app.use(cors());
 
-    // GET last tickets
-    this.app.get("/lasttickets", (req, res) => {
+    // Get last 13 tickets
+    this.app.get("/lasts", (req, res) => {
       res.json({
-        status: 200,
         ok: true,
-        lastTickets: this.sockets.ticketList.last13,
+        last: this.sockets.ticketList.last13,
       });
     });
   }
 
-  // Esta configuración se puede tener aquí o como propieda de clase
-  // depende mucho de lo que necesites
-  //   configureSockets() {
-  //     new Sockets(this.io);
-  //   }
-
   execute() {
-    // Inicializar Middlewares
+    //  Middlewares Initialization
     this.middlewares();
 
-    // Inicializar sockets
-    // this.configureSockets();
-
-    // Inicializar Server
+    // Server Initialization
     this.server.listen(this.port, () => {
-      console.log("Server corriendo en puerto:", this.port);
+      console.log("Server running on port:", this.port);
     });
   }
 }

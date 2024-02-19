@@ -3,11 +3,12 @@ const Ticket = require("./ticket");
 class TicketList {
   constructor() {
     this.lastNumber = 0;
+
     this.pending = [];
     this.assigned = [];
   }
 
-  get nextNumber() {
+  get nextTicketNumber() {
     this.lastNumber++;
     return this.lastNumber;
   }
@@ -17,7 +18,7 @@ class TicketList {
   }
 
   createTicket() {
-    const newTicket = new Ticket(this.nextNumber);
+    const newTicket = new Ticket(this.nextTicketNumber);
     this.pending.push(newTicket);
     return newTicket;
   }
@@ -33,6 +34,7 @@ class TicketList {
     nextTicket.desktop = desktop;
 
     this.assigned.unshift(nextTicket);
+
     return nextTicket;
   }
 }
